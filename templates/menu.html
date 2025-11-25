@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Menu du Restaurant{% endblock %}
+
+{% block content %}
+<h1>Notre Menu</h1>
+
+<!-- Boucle pour afficher tous les articles du menu -->
+{% for item in menu_items %}
+<div class="menu-item">
+    <h3>{{ item.name }} -  {{ item.price }}€</h3>
+    <p>{{ item.description }}</p>
+</div>
+{% endfor %}
+<!-- Lien vers la page de commande -->
+<a href="{{ url_for('order') }}">Passer commande</a>
+{% endblock %}

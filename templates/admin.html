@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Administration{% endblock %}
+
+{% block content %}
+<h1>Interface d'Administration</h1>
+<div class="orders-container">
+<!-- Liste de toutes les commandes -->
+{% for order in orders %}
+<div class="order">
+    <h3>Commande #{{ order.id }} - {{ order.customer_name }}</h3>
+    <p><strong>Total:</strong> {{ order.total }}€</p>
+    <p><strong>Articles:</strong> {{ order.items }}</p>
+    <p><strong>Date:</strong> {{ order.created_at }}</p>
+    
+    <!-- Affichage et gestion du statut -->
+    <p>
+        <strong>Statut:</strong> 
+        <span class="status-{{ order.status.replace(' ', '') }}">
+            {{ order.status }}
+        </span>
+    </p>
+    
+    <!-- Boutons pour changer le statut -->
+    <div class="status-buttons">
+        <a href="{{ url_for('update_status', order_id=order.id, new_status='en attente') }}">
+            <button>En attente</button>
+        </a>
+        <a href="{{ url_for('update_status', order_id=order.id, new_status='préparé') }}">
+            <button>Préparé</button>
+        </a>
+        <a href="{{ url_for('update_status', order_id=order.id, new_status='livré') }}">
+            <button>Livré</button>
+        </a>
+    </div>
+    
+    <!-- Bouton pour supprimer la commande -->
+    <div class="delete-button">
+        <a href="{{ url_for('delete_order', order_id=order.id) }}" 
+           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?')">
+            <button style="background-color: #ff4444; color: white;">Supprimer la commande</button>
+        </a>
+    </div>
+</div>
+
+{% else %}
+<p>Aucune commande pour le moment.</p>
+{% endfor %}
+</div>
+{% endblock %}

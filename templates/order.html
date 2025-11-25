@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Passer Commande{% endblock %}
+
+{% block content %}
+<h1>Passer une Commande</h1>
+
+<!-- Formulaire de commande -->
+<form method="POST">
+    <div>
+        <label for="customer_name">Votre nom:</label>
+        <input type="text" id="customer_name" name="customer_name" required>
+    </div>
+    
+    <h3>Sélectionnez vos articles:</h3>
+    
+    <!-- Liste des articles avec cases à cocher et quantités -->
+    {% for item in menu_items %}
+    <div class="menu_item">
+        <input type="checkbox" name="menu_items" value="{{ item.id }}" id="item{{ item.id }}">
+        <label for="item{{ item.id }}">
+            <strong>{{ item.name }}</strong> - {{ item.price }}€
+            <br><small>{{ item.description }}</small>
+        </label>
+        
+        <!-- Sélecteur de quantité -->
+        <select name="quantities">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    {% endfor %}
+    
+    <br>
+    <button type="submit">Passer la commande</button>
+</form>
+{% endblock %}
